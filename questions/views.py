@@ -11,6 +11,8 @@ from questions.models import Rating
 # from .forms import RateForm, AdvertisePostForm
 from django import forms
 import numpy as np
+from django.contrib.auth import get_user_model
+User = get_user_model()
 
 
 def index(request):
@@ -30,6 +32,9 @@ def detail(request, question_id):
     all_ratings = Rating.objects.filter(question_id=question_id)
     rating_list = ([all_ratings[x].rating_recieved for x in range(len(all_ratings))])
     avg_rating = round(np.mean(rating_list),2)
+
+    your_ratings = Rating.objects.filter(question_id=question_id)
+
     # print(avg_rating)
 
     return render(request, 'questions/detail.html', {'question': question, 'avg_rating':avg_rating})
@@ -39,7 +44,7 @@ def vote(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
     rating = request.POST['vote_result']
     print(question, rating)
-    obj = Rating(question=question, rating_recieved=rating,)
+    obj = Rating(question=question, rating_recieved=rating,user=request.user )
     obj.save()
 
 

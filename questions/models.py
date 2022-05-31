@@ -4,6 +4,7 @@ from re import T
 from django.db import models
 from django.utils import timezone
 from django.conf import settings
+from django.contrib.auth.models import User
 
 
 class Question(models.Model):
@@ -25,6 +26,8 @@ class Question(models.Model):
 class Rating(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     rating_recieved = models.IntegerField(default=5)
+    user = models.ForeignKey(User, default=None, on_delete=models.CASCADE)
+
 
     # rate4 = models.IntegerField(default=4)
     # rate6 = models.IntegerField(default=6)
