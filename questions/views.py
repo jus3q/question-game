@@ -29,7 +29,7 @@ def detail(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
     all_ratings = Rating.objects.filter(question_id=question_id)
     rating_list = ([all_ratings[x].rating_recieved for x in range(len(all_ratings))])
-    avg_rating = np.mean(rating_list)
+    avg_rating = round(np.mean(rating_list),2)
     # print(avg_rating)
 
     return render(request, 'questions/detail.html', {'question': question, 'avg_rating':avg_rating})

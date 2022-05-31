@@ -19,6 +19,13 @@
         <p>Average Rating is {{ avg_rating }}</p>
     </form>
 
+    {% if user.is_authenticated %}
+    Hi {{ user.username }}
+    <!-- <p><a href="{% url 'logout' %}">Log Out</a></p> -->
+    {% else %}
+    <p>Hello, <a href="{% url 'login' %}">Guest</a> </p>
+    {% endif %}
+
 
 
 
