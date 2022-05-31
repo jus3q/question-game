@@ -25,4 +25,7 @@ class Question(models.Model):
 class Rating(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     rate_number = models.IntegerField(default=5)
-
+    rate4 = models.IntegerField(default=4)
+    rate6 = models.IntegerField(default=6)
+    titletest = models.CharField(max_length=100)
+    duration = models.IntegerField(default=8)
