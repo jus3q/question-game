@@ -8,7 +8,7 @@ from django.shortcuts import get_object_or_404, render
 import random
 from django.forms import ModelForm
 from questions.models import Rating
-from .forms import RateForm, AdvertisePostForm
+# from .forms import RateForm, AdvertisePostForm
 from django import forms
 
 
@@ -26,24 +26,37 @@ def index(request):
 
 def detail(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
-    form = AdvertisePostForm()
-    return render(request, 'questions/detail.html', {'question': question, 'form': form})
+    # form = AdvertisePostForm()
+    form = 'form'
+    return render(request, 'questions/detail.html', {'question': question,})
 
 
 def vote(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
-    print(question)
-    print(request.POST)  
-    try:
-        print(request.POST['vote_slider'])
-    except:
-        pass
-    # print(request.POST['choice'])   #gets choice radio
-    try:
-        selected_choice = question.rating_set.get(pk=request.POST['choice'])
-        print(selected_choice)
-    except: 
-        pass
+    rating = request.POST['vote_result']
+    print(question, rating)
+    obj = Rating(question=question, rating_recieved=rating,)
+    obj.save()
+
+
+ 
+    # try:
+    #     rating = request.POST['vote_result']
+    #     print(f'rating {rating}')
+    # except (KeyError, Choice.DoesNotExist):
+    #     # Redisplay the question voting form.
+    #     return render(request, 'questions/detail.html', {
+    #         'question': question,
+    #         'error_message': "You didn't select a choice.",
+    #     })
+    # try:
+    #     rating = request.POST['vote_result']
+        
+    #     # selected_choice = question.rating_set.get(pk=rating)
+    #     print('selected_choice')
+    #     print(selected_choice)
+    # except: 
+    #     pass
     # print(f"the questions is {question}")
 
     # try:

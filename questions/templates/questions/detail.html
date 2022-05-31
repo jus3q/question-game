@@ -4,12 +4,12 @@
     <h2>{{ question.title }}</h2>
     <h2>{{ question.question_text }}</h2>
 
-    <form action="{% url 'questions:vote' question.id %}" method="post">
+    <!-- <form action="{% url 'questions:vote' question.id %}" method="post">
             {% csrf_token %}
             <p>Please choose a rating to move on...</p>
             {{ form }}
             <input type="submit" value="Submit">
-    </form>
+    </form> -->
 
 
     <form action="{% url 'questions:vote' question.id %}" method="post">
@@ -22,32 +22,32 @@
 
 
 
-    <form action="{% url 'questions:vote' question.id %}" method="post">
-        {% csrf_token %}
-        <fieldset>
+    <!-- <form action="{% url 'questions:vote' question.id %}" method="post"> -->
+        <!-- {% csrf_token %} -->
+        <!-- <fieldset> -->
 
             <!-- How to pass selected choice back to the vote function?? -->
 
-            <legend><h3>Rating for: {{ question.question_text }}</h3></legend>
-            {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+            <!-- <legend><h3>Rating for: {{ question.question_text }}</h3></legend> -->
+            <!-- {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %} -->
 
                 <!-- <input id="vote_slider" type="range" min="1" max="10" value="5" />
                 <label for="vote_slider"> votes slider </label> -->
 
-                <input type="radio" name="choice" id="choice{{ forloop.counter }}" value=1>
-                <label for="choice{{ forloop.counter }}">one </label><br>
+                <!-- <input type="radio" name="choice" id="choice{{ forloop.counter }}" value=1> -->
+                <!-- <label for="choice{{ forloop.counter }}">one </label><br> -->
 
-                <input type="radio" name="choice" id="choice{{ forloop.counter }}" value=2>
-                <label for="choice{{ forloop.counter }}">two</label><br>
+                <!-- <input type="radio" name="choice" id="choice{{ forloop.counter }}" value=2> -->
+                <!-- <label for="choice{{ forloop.counter }}">two</label><br> -->
 
             <!-- {% for choice in question.choice_set.all %}
                 <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
                 <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
             {% endfor %} -->
 
-        </fieldset>
-        <input type="submit" value="Vote">
-        </form>
+        <!-- </fieldset> -->
+        <!-- <input type="submit" value="Vote"> -->
+        <!-- </form> -->
 
 </body>
 </html>
