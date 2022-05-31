@@ -10,6 +10,7 @@ from django.forms import ModelForm
 from questions.models import Rating
 # from .forms import RateForm, AdvertisePostForm
 from django import forms
+import numpy as np
 
 
 def index(request):
@@ -26,9 +27,12 @@ def index(request):
 
 def detail(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
-    # form = AdvertisePostForm()
-    form = 'form'
-    return render(request, 'questions/detail.html', {'question': question,})
+    all_ratings = Rating.objects.filter(question_id=question_id)
+    rating_list = ([all_ratings[x].rating_recieved for x in range(len(all_ratings))])
+    avg_rating = np.mean(rating_list)
+    # print(avg_rating)
+
+    return render(request, 'questions/detail.html', {'question': question, 'avg_rating':avg_rating})
 
 
 def vote(request, question_id):

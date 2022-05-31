@@ -16,38 +16,11 @@
         {% csrf_token %}
         <input id="vote_slider" name="vote_result" type="range" min="1" max="10" value="5" />
         <input type="submit" value="Submit">
+        <p>Average Rating is {{ avg_rating }}</p>
     </form>
 
 
 
-
-
-    <!-- <form action="{% url 'questions:vote' question.id %}" method="post"> -->
-        <!-- {% csrf_token %} -->
-        <!-- <fieldset> -->
-
-            <!-- How to pass selected choice back to the vote function?? -->
-
-            <!-- <legend><h3>Rating for: {{ question.question_text }}</h3></legend> -->
-            <!-- {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %} -->
-
-                <!-- <input id="vote_slider" type="range" min="1" max="10" value="5" />
-                <label for="vote_slider"> votes slider </label> -->
-
-                <!-- <input type="radio" name="choice" id="choice{{ forloop.counter }}" value=1> -->
-                <!-- <label for="choice{{ forloop.counter }}">one </label><br> -->
-
-                <!-- <input type="radio" name="choice" id="choice{{ forloop.counter }}" value=2> -->
-                <!-- <label for="choice{{ forloop.counter }}">two</label><br> -->
-
-            <!-- {% for choice in question.choice_set.all %}
-                <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
-                <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
-            {% endfor %} -->
-
-        <!-- </fieldset> -->
-        <!-- <input type="submit" value="Vote"> -->
-        <!-- </form> -->
 
 </body>
 </html>
