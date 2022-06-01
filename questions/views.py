@@ -33,19 +33,39 @@ def detail(request, question_id):
     rating_list = ([all_ratings[x].rating_recieved for x in range(len(all_ratings))])
     avg_rating = round(np.mean(rating_list),2)
 
-    your_ratings = Rating.objects.filter(question_id=question_id)
+    try:
+        your_ratings = Rating.objects.filter(question_id=question_id, user=request.user)
+        your_rating_list = ([your_ratings[x].rating_recieved for x in range(len(your_ratings))])
+        your_avg_rating = round(np.mean(your_rating_list),2)
+    except:
+        # pass
+        your_avg_rating = None
+    guest_ratings = Rating.objects.filter(question_id=question_id, user=None)
+    guest_rating_list = ([guest_ratings[x].rating_recieved for x in range(len(guest_ratings))])
+    guest_avg_rating = round(np.mean(guest_rating_list),2)
+    print('----------------------')
+    print(guest_avg_rating)
 
     # print(avg_rating)
 
-    return render(request, 'questions/detail.html', {'question': question, 'avg_rating':avg_rating})
+    return render(request, 'questions/detail.html', {'question': question, 
+                                                    'avg_rating':avg_rating,
+                                                    'your_avg_rating':your_avg_rating,
+                                                    'guest_avg_rating':guest_avg_rating,
+                                                     })
 
 
 def vote(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
     rating = request.POST['vote_result']
     print(question, rating)
-    obj = Rating(question=question, rating_recieved=rating,user=request.user )
-    obj.save()
+    try:
+        obj = Rating(question=question, rating_recieved=rating, user=request.user )
+    except:
+            obj = Rating(question=question, rating_recieved=rating, )
+    finally:
+        obj.save()
+
 
 
  

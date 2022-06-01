@@ -11,16 +11,23 @@
             <input type="submit" value="Submit">
     </form> -->
 
-
+    <p>Submit Your Rating!</p>
     <form action="{% url 'questions:vote' question.id %}" method="post">
         {% csrf_token %}
         <input id="vote_slider" name="vote_result" type="range" min="1" max="10" value="5" />
         <input type="submit" value="Submit">
-        <p>Average Rating is {{ avg_rating }}</p>
     </form>
 
+    <p>Average Rating is {{ avg_rating }}</p>
     {% if user.is_authenticated %}
-    Hi {{ user.username }}
+    <p>Your average Rating is {{ your_avg_rating }}</p>
+    {% else %}
+    <p>Login to see your average rating! </p>
+    {% endif %}
+    The average guest rating is {{ guest_avg_rating }}
+
+    {% if user.is_authenticated %}
+    <p>Hi {{ user.username }}! </p>
     <!-- <p><a href="{% url 'logout' %}">Log Out</a></p> -->
     {% else %}
     <p>Hello, <a href="{% url 'login' %}">Guest</a> </p>

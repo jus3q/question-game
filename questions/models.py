@@ -26,7 +26,7 @@ class Question(models.Model):
 class Rating(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     rating_recieved = models.IntegerField(default=5)
-    user = models.ForeignKey(User, default=None, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, default=None, on_delete=models.CASCADE, null=True, blank=True)
 
 
     # rate4 = models.IntegerField(default=4)
