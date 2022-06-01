@@ -17,9 +17,7 @@ User = get_user_model()
 
 def index(request):
     '''
-    get length of questins in database
-    randomly choose 3
-    output those 3
+    add options to filter by rating, user, ...
     '''
     length_questions = count=len(Question.objects.all())
     q_list = [Question.objects.all()[random.randint(0,length_questions-1)] for x in range(3) ]
@@ -29,24 +27,22 @@ def index(request):
 
 def detail(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
+
+    # Get All Ratings
     all_ratings = Rating.objects.filter(question_id=question_id)
     rating_list = ([all_ratings[x].rating_recieved for x in range(len(all_ratings))])
     avg_rating = round(np.mean(rating_list),2)
-
+    # Get Your Rating -if your logged in
     try:
         your_ratings = Rating.objects.filter(question_id=question_id, user=request.user)
         your_rating_list = ([your_ratings[x].rating_recieved for x in range(len(your_ratings))])
         your_avg_rating = round(np.mean(your_rating_list),2)
     except:
-        # pass
         your_avg_rating = None
+    # Get Guest Rating    
     guest_ratings = Rating.objects.filter(question_id=question_id, user=None)
     guest_rating_list = ([guest_ratings[x].rating_recieved for x in range(len(guest_ratings))])
     guest_avg_rating = round(np.mean(guest_rating_list),2)
-    print('----------------------')
-    print(guest_avg_rating)
-
-    # print(avg_rating)
 
     return render(request, 'questions/detail.html', {'question': question, 
                                                     'avg_rating':avg_rating,
@@ -62,7 +58,7 @@ def vote(request, question_id):
     try:
         obj = Rating(question=question, rating_recieved=rating, user=request.user )
     except:
-            obj = Rating(question=question, rating_recieved=rating, )
+        obj = Rating(question=question, rating_recieved=rating, )
     finally:
         obj.save()
 
