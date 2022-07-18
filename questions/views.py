@@ -7,12 +7,17 @@ from django.template import loader
 from django.shortcuts import get_object_or_404, render
 import random
 from django.forms import ModelForm
-from questions.models import Rating
+from questions.models import Rating, Question
 # from .forms import RateForm, AdvertisePostForm
 from django import forms
 import numpy as np
+import csv
 from django.contrib.auth import get_user_model
+
 User = get_user_model()
+
+
+
 
 
 def index(request):
@@ -100,3 +105,27 @@ def vote(request, question_id):
     #     # user hits the Back button.
     #     return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
     return HttpResponseRedirect(reverse('questions:index'))
+
+
+
+def build_data(request):
+    add_list = []
+    did_not_add_list = []
+    with open("sample.txt", "r") as fp:
+        for row in csv.reader(fp, delimiter=':'):
+            print(row)
+            is_question = Question.objects.filter(question_text=row[0])
+            print(is_question)
+
+            if is_question.exists():
+                # print("it exists")
+                did_not_add_list.append(row[0])
+            else:
+                add_list.append(row[0])
+                try:
+                    obj = Question(question_text=row[0], title=row[1], )
+                except:
+                    obj = Question(question_text=row[0], )
+                obj.save()
+    response_text = f'added {add_list} | did not add {did_not_add_list}'
+    return HttpResponse(response_text)
